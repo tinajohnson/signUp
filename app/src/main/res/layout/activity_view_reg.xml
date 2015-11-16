@@ -1,0 +1,54 @@
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:orientation="vertical"
+        tools:context="com.thinkfoss.signupapp.ViewReg">
+
+        <TextView
+            android:id="@+id/viewReg"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/view_reg" />
+
+        <TextView
+        android:id="@+id/noRegText"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/empty_reg" />
+
+        <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/list"
+            android:layout_weight="1">
+        </ListView>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="#ff0000"
+                android:id="@+id/view_reg_del_button"
+                android:text="@string/view_reg_del_button"
+                android:layout_gravity="center_horizontal" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_alignParentRight="true"
+                android:background="#5EC639"
+                android:id="@+id/view_save_button"
+                android:text="@string/view_save_button"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+

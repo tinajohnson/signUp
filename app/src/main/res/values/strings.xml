@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">SignUp</string>
+
+    <string name="form_overview">Would you like to help ? Please register here:</string>
+    <string name="action_settings">Settings</string>
+    <string name="name_hint">Enter your name</string>
+    <string name="title_hint">Designation or Title</string>
+    <string name="email_hint">Email address</string>
+    <string name="phone_hint">Mobile number</string>
+    <string name="dept_hint">Department or Speciality or Area of interest</string>
+    <string name="comments_hint">How would you like to help ?</string>
+    <string name="register_button">Register</string>
+    <string name="title_activity_main">SignUp</string>
+    <string name="home_register_button">Register</string>
+    <string name="home_view_button">View Registrations</string>
+    <string name="title_activity_view_reg">View Registrations</string>
+    <string name="view_reg">The registrations are:</string>
+    <string name="view_reg_del_button">Delete</string>
+    <string name="empty_reg">No registrations to view</string>
+    <string name="view_save_button">Email me</string>
+    <string name="label_name">Name</string>
+
+</resources>
