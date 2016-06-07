@@ -7,6 +7,7 @@
     <string name="title_hint">Designation or Title</string>
     <string name="email_hint">Email address</string>
     <string name="phone_hint">Mobile number</string>
+    <string name="city_hint">City</string>
     <string name="dept_hint">Department or Speciality or Area of interest</string>
     <string name="comments_hint">How would you like to help ?</string>
     <string name="register_button">Register</string>
@@ -19,5 +20,20 @@
     <string name="empty_reg">No registrations to view</string>
     <string name="view_save_button">Email me</string>
     <string name="label_name">Name</string>
+    <string name="select_city">Select City</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string-array name="cities">
+        <item>Seattle</item>
+        <item>San Ramon</item>
+        <item>Los Angeles</item>
+        <item>New Mexico</item>
+        <item>Dallas</item>
+        <item>Chicago</item>
+        <item>New York</item>
+        <item>Boston</item>
+        <item>DC</item>
+        <item>Toronto</item>
+    </string-array>
 
 </resources>

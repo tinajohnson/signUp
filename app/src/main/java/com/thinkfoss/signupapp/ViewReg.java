@@ -1,6 +1,7 @@
 package com.thinkfoss.signupapp;
 
 import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -33,13 +34,21 @@ import java.sql.SQLDataException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-public class ViewReg extends AppCompatActivity {
+public class ViewReg extends AppCompatActivity
+        implements SelectCityFragment.NoticeDialogListener
+{
 
     private SQLiteDatabase db;
-    private String filename = "Registrations.txt";
     private String emailSubject;
     private ArrayList<String> result = new ArrayList<String>();
     private ArrayList<String> resultToFile = new ArrayList<String>();
+    private ArrayList<String> resultToEmail = new ArrayList<String>();
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog, String selected) {
+        writeEmail(selected);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +76,11 @@ public class ViewReg extends AppCompatActivity {
             });
         }
 
-        saveBtn.setOnClickListener( new Button.OnClickListener() {
+        saveBtn.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 if (isExternalStorageWritable()) {
-                    writeEmail();
+                    DialogFragment selectCity = new SelectCityFragment();
+                    selectCity.show(getFragmentManager(), null);
                 }
             }
         });
@@ -110,6 +120,7 @@ public class ViewReg extends AppCompatActivity {
                     DbHelper.COLUMN_NAME_DESIGN,
                     DbHelper.COLUMN_NAME_EMAIL,
                     DbHelper.COLUMN_NAME_MOBL,
+                    DbHelper.COLUMN_NAME_CITY,
                     DbHelper.COLUMN_NAME_AREA,
                     DbHelper.COLUMN_NAME_COMMENTS
             };
@@ -117,6 +128,7 @@ public class ViewReg extends AppCompatActivity {
             Cursor c = db.query(
                     DbHelper.TABLE_NAME,
                     columns,
+                    null,
                     null,
                     null,
                     null,
@@ -131,13 +143,14 @@ public class ViewReg extends AppCompatActivity {
                         String design = c.getString(c.getColumnIndex("design"));
                         String email = c.getString(c.getColumnIndex("email"));
                         String mobnum = c.getString(c.getColumnIndex("mobnum"));
+                        String city = c.getString(c.getColumnIndex("city"));
                         String interestedarea = c.getString(c.getColumnIndex("interestedarea"));
                         String comments = c.getString(c.getColumnIndex("comments"));
                         //format in which the data is shown in view
                         result.add( "Name: "+ name + "\nDesignation: " + design + "\nEmail: " + email + "\nMobile: "
-                                    + mobnum + "\nArea or Department: " + interestedarea + "\nComments: " + comments );
+                                    + mobnum + "\nCity: " + city + "\nArea or Department: " + interestedarea + "\nComments: " + comments );
                         //format in which data is entered to file
-                        resultToFile.add( "Name: "+ name + "\nDesignation: " + design + "\nEmail: " + email + "\nMobile: " + mobnum
+                        resultToFile.add( "Name: "+ name + "\nDesignation: " + design + "\nEmail: " + email + "\nMobile: " + mobnum + "\nCity: " + city
                                 + "\nArea or Department: " + interestedarea + "\nComments: " + comments + "\n----------------------\n");
 
                     } while( c.moveToNext() );
@@ -150,32 +163,25 @@ public class ViewReg extends AppCompatActivity {
 
     }
 
-    //writes to SD file and also composes email with registration list as the content
-    private void writeEmail(){
-//        Save to SD card
-//        File file = new File( getExternalFilesDir(null), "Registrations.txt");
-//
-//        try {
-//            FileOutputStream os = new FileOutputStream(file, true);
-//            OutputStreamWriter out = new OutputStreamWriter(os);
-//            out.write(resultToFile.toString());
-//            out.close();
+    private void getEmailData( String city ) {
+        for( int i = 0; i<resultToFile.size(); i++) {
+            if( resultToFile.get(i).contains("City: " + city)){
+                resultToEmail.add(resultToFile.get(i));
+            }
+        }
+    }
 
-            emailSubject = resultToFile.toString().substring(1,resultToFile.toString().length()-1).replace("---\n,","\n");
-            //Uri uri = Uri.parse(getExternalFilesDir(null).getAbsolutePath() + filename);
+    //writes to SD file and also composes email with registration list as the content
+    private void writeEmail( String city ){
+            getEmailData(city);
+            emailSubject = resultToEmail.toString().substring(1,resultToEmail.toString().length()-1).replace("---\n,","\n");
             Intent intent = new Intent(Intent.ACTION_SENDTO);
             intent.setData(Uri.parse("mailto:"));
             intent.putExtra(Intent.EXTRA_EMAIL, "");
             intent.putExtra(Intent.EXTRA_SUBJECT, "Registration List");
             intent.putExtra(Intent.EXTRA_TEXT, emailSubject );
             startActivity(intent);
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//            Log.i("ERROR", "******* File not found. Did you" +
-//                    " add a WRITE_EXTERNAL_STORAGE permission to the   manifest?");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+
     }
 
     public boolean isExternalStorageWritable() {
