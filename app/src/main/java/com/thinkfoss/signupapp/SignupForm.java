@@ -68,7 +68,7 @@ public class SignupForm extends AppCompatActivity implements AdapterView.OnItemS
                 if (name.isEmpty() && design.isEmpty() && email.isEmpty() && mob.isEmpty() && selectedCity.isEmpty() && area.isEmpty() && comments.isEmpty()) {
                     Toast.makeText(SignupForm.this, "All fields are empty!", Toast.LENGTH_SHORT).show();
                 } else if (name.isEmpty() || email.isEmpty() || mob.isEmpty() || selectedCity.isEmpty()) {
-                    Toast.makeText(SignupForm.this, "Name, Email and mobile are required fields!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignupForm.this, "Name, Email, City and Mobile are required fields!", Toast.LENGTH_SHORT).show();
                 } else {
                     db.insert(DbHelper.TABLE_NAME, null, content);
                     Toast.makeText(SignupForm.this, "Thank you for your response!", Toast.LENGTH_SHORT).show();
